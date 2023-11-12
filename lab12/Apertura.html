@@ -6,6 +6,21 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
   <title>Torneo Apertura</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+  <style>
+    .linea-superior {
+      border-top: 5px solid #4185b0; /* Color y grosor de la línea superior */
+      margin-top: 10px; /* Espaciado superior */
+    }
+
+    .linea-inferior {
+      border-bottom: 5px solid #4185b0; /* Color y grosor de la línea inferior */
+      margin-bottom: 10px; /* Espaciado inferior */
+    }
+    body {
+      background-color: #f1f5f1; /* Reemplaza #f0f0f0 con el color deseado en formato hexadecimal, RGB, o nombre */
+    }
+  </style>
+
 </head>
 <body>
 <div class="container">
@@ -28,10 +43,14 @@
   </nav>
   <br>
   <div class="text-center">
-    <h2 class="display-4" style="font-weight: bold;">Torneo Apertura</h2>
+    <h2 class="display-4" style="font-weight: bold;">
+      <hr class="linea-superior">
+      Torneo Apertura
+      <hr class="linea-inferior">
+    </h2>
   </div>
   <br>
-  <table class="table">
+  <table class="table table-bordered border-primary">
     <thead>
     <tr>
       <th scope="col">#</th>
