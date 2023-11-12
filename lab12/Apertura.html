@@ -96,6 +96,43 @@
         alert(error)
       })
 
+    $.ajax({
+      url:"http://localhost:8000/api/liga/",
+      method:"GET",
+      dataType : "json"  })
+      .done(function (data){
+
+        var contentHtml = "";
+        let p=0;
+        $.each(data , function (i, repuesta) {
+
+          if (repuesta.liga == 1){
+            p= p+ 1;
+            contentHtml += "<tr>";
+            contentHtml += "<td>" + p + "</td>";
+            contentHtml += "<td>" + repuesta.equipo.nombre +  "</td>";
+            contentHtml += "<td>" + repuesta.partidos_jugados +  "</td>";
+            contentHtml += "<td>" + repuesta.partidos_ganados +  "</td>";
+            contentHtml += "<td>" + repuesta.partidos_perdidos +  "</td>";
+            contentHtml += "<td>" + repuesta.partidos_empatados +  "</td>";
+            contentHtml += "<td>" + repuesta.goles_favor +  "</td>";
+            contentHtml += "<td>" + repuesta.goles_contra +  "</td>";
+            contentHtml += "<td>" + repuesta.goles_diferencia +  "</td>";
+            contentHtml += "<td>" + repuesta.puntos +  "</td>";
+            contentHtml += "<td><a class='btn btn-danger' href='Equipo.html?id=" + encodeURI(repuesta.equipo.id) +"' > " + "Detalles" +  "</td>";
+            contentHtml += "</tr>";
+          }
+
+        });
+        $("#cuadro").html(contentHtml);
+
+
+
+      })
+      .fail(function (error){
+        console.log(error);
+        alert(error)
+      })
   });
 
 
