@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Torneo Clausura</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+  <style>
+    .linea-superior {
+      border-top: 5px solid #4185b0; /* Color y grosor de la línea superior */
+      margin-top: 10px; /* Espaciado superior */
+    }
+
+    .linea-inferior {
+      border-bottom: 5px solid #4185b0; /* Color y grosor de la línea inferior */
+      margin-bottom: 10px; /* Espaciado inferior */
+    }
+    body {
+      background-color: #f1f5f1; /* Reemplaza #f0f0f0 con el color deseado en formato hexadecimal, RGB, o nombre */
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link fs-4" href="Apertura.html">Torneo Apertura</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active fs-4" href="Clausura.html">Torneo Clausura</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-4" href="Acumulado.html">Acumulado</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <br>
+  <div class="text-center">
+    <h2 class="display-4" style="font-weight: bold;">
+      <hr class="linea-superior">
+      Torneo Clausura
+      <hr class="linea-inferior">
+    </h2>
+  </div>
+  <br>
+      <table class="table table-bordered border-primary">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Equipo</th>
+            <th scope="col">Partidos jugados</th>
+            <th scope="col">Partidos ganados</th>
+            <th scope="col">Partidos perdidos</th>
+            <th scope="col">Partidos empatados</th>
+            <th scope="col">Goles a favor</th>
+            <th scope="col">Goles en contra</th>
+            <th scope="col">Goles de diferencia</th>
+            <th scope="col">Puntos</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody id="cuadro">
+
+        </tbody>
+      </table>
+  <div id="equipoConMasPuntos" class="mt-3 text-center fs-2"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"></script>
+
+  <script>
+
+    $( document).ready(function (){
+
+      $.ajax({
+        url:"http://localhost:8000/api/liga/",
+        method:"GET",
+        dataType : "json"  })
+        .done(function (data){
+
+          var contentHtml = "";
+          let p=0;
+          $.each(data , function (i, repuesta) {
+
+            if (repuesta.liga == 2){
+              p= p+ 1;
+              contentHtml += "<tr>";
+              contentHtml += "<td>" + p + "</td>";
+              contentHtml += "<td>" + repuesta.equipo.nombre +  "</td>";
+              contentHtml += "<td>" + repuesta.partidos_jugados +  "</td>";
+              contentHtml += "<td>" + repuesta.partidos_ganados +  "</td>";
+              contentHtml += "<td>" + repuesta.partidos_perdidos +  "</td>";
+              contentHtml += "<td>" + repuesta.partidos_empatados +  "</td>";
+              contentHtml += "<td>" + repuesta.goles_favor +  "</td>";
+              contentHtml += "<td>" + repuesta.goles_contra +  "</td>";
+              contentHtml += "<td>" + repuesta.goles_diferencia +  "</td>";
+              contentHtml += "<td>" + repuesta.puntos +  "</td>";
+              contentHtml += "<td><a class='btn btn-danger' href='Equipo.html?id=" + encodeURI(repuesta.equipo.id) +"' > " + "Detalles" +  "</td>";
+              contentHtml += "</tr>";
+            }
+
+          });
+          $("#cuadro").html(contentHtml);
+
+
+
+        })
+        .fail(function (error){
+          console.log(error);
+          alert(error)
+        })
+
+    });
+
+
+  </script>
+
+  </body>
+</html>
