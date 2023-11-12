@@ -21,7 +21,7 @@
             <a class="nav-link fs-4" href="Clausura.html">Torneo Clausura</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fs-4" href="Acumulado.html">Acumulado</a>
+            <a class="nav-link fs-4" href="Acumulado.html">Tabla Acumulada</a>
           </li>
         </ul>
       </div>
@@ -33,8 +33,16 @@
   <br>
   <table class="table table-sm">
     <tr>
-      <th>Equipo</th>
-      <th>Estadio</th>
+      <th scope="col">Equipo</th>
+      <th scope="col">Estadio</th>
+      <th scope="col">Partidos jugados</th>
+      <th scope="col">Partidos ganados</th>
+      <!--th scope="col">Partidos perdidos</th>
+      <th scope="col">Partidos empatados</th>
+      <th scope="col">Goles a favor</th>
+      <th scope="col">Goles en contra</th>
+      <th scope="col">Goles de diferencia</th>
+      <th scope="col">Puntos</th-->
     </tr>
     <tbody id="cuadro">
 
@@ -49,7 +57,7 @@
   let url = new URLSearchParams(window.location.search);
   let uri =url.get('id');
   let id =decodeURI(uri);
-  $( document).ready(function (){
+  /*$( document).ready(function (){
 
 
       $.ajax({
@@ -71,7 +79,6 @@
               contentHtml += "<td>" + equipo.nombre +  "</td>";
               contentHtml += "<td>" + equipo.estadio +  "</td>";
               contentHtml += "</tr>";
-
             }
           });
           $("#cuadro").html(contentHtml);
@@ -81,8 +88,42 @@
           console.log(error);
           alert(error)
         })
-  });
+  });*/
+  $( document).ready(function (){
 
+
+    $.ajax({
+      url:"http://localhost:8000/api/equipos/",
+      method:"GET",
+      dataType : "json"  })
+      .done(function (data){
+
+        var contentHtml = "";
+
+        console.log(id);
+        console.log(data);
+
+        $.each(data , function (i, equipo) {
+
+          if (equipo.id == id){
+            $("#titulo").html(equipo.nombre);
+            contentHtml += "<tr>";
+            contentHtml += "<td>" + equipo.nombre +  "</td>";
+            contentHtml += "<td>" + equipo.estadio +  "</td>";
+            contentHtml += "</tr>";
+          }
+        });
+
+
+
+        $("#cuadro").html(contentHtml);
+
+      })
+      .fail(function (error){
+        console.log(error);
+        alert(error)
+      })
+  });
 </script>
 
 </body>
